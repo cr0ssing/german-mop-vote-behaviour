@@ -1,0 +1,71 @@
+<!-- Copyright (C) 2023 Robin Lamberti.
+
+This file is part of german-mop-vote-behaviour.
+
+german-mop-vote-behaviour is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+german-mop-vote-behaviour is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with german-mop-vote-behaviour. If not, see <http://www.gnu.org/licenses/>. -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="vivagraph.min.js"></script>
+    <script type="text/javascript" language="javascript" src="jquery-3.7.1.min.js"></script> 
+
+    <script type="text/javascript">
+        $(document).ready(function(e) {
+            var graph = Viva.Graph.graph();
+
+            var graphicsOptions = {
+                clearColor: true, // we want to avoid rendering artifacts
+                clearColorValue: { // use black color to erase background
+                r: 255,
+                g: 255,
+                b: 255,
+                a: 1
+                }
+            };
+            var graphics = Viva.Graph.View.webglGraphics(graphicsOptions);
+
+            var renderer = Viva.Graph.View.renderer(graph, {
+                graphics : graphics,
+                // layout   : layout,
+            });
+            renderer.run();
+
+            members.forEach(m => {
+                graph.addNode(m.name, m)
+                var nodeUI = graphics.getNodeUI(m.name);
+                //nodeUI.color = data.milestone ? 0xFF0000FF : 0x0000FFFF;
+            });
+
+            attraction.forEach(a => {
+                graph.addLink(a.a, a.b);
+            });
+        });
+    </script>
+    <script type="text/javascript" language="javascript" src="./members.js"></script>
+    <script type="text/javascript" language="javascript" src="./attraction.js"></script> 
+
+    <style type='text/css'>
+        body {
+            height: 95%;
+            width: 95%;
+            position: absolute;
+            margin: 0px;
+        }
+    </style>
+</head>
+<body style="background-color: white;">
+
+</body>
+</html>
